@@ -18,7 +18,11 @@ Tested on version 1.4.5 of Wagtail
 1. Copy or clone wagtaildocs into your project or replace the wagtaildocs folder in wagtail with this one
 2. run python manage.py migrate wagtaildocs
 
+### Documents index
 ![alt tag](https://raw.githubusercontent.com/anteatersa/Wagtail-Document-Folders/master/screenshots/img-01.png)
+### Adding a folder
 ![alt tag](https://raw.githubusercontent.com/anteatersa/Wagtail-Document-Folders/master/screenshots/img-02.png)
+### Adding documents to a folder
 ![alt tag](https://raw.githubusercontent.com/anteatersa/Wagtail-Document-Folders/master/screenshots/img-03.png)
+### Deleting a folder
 ![alt tag](https://raw.githubusercontent.com/anteatersa/Wagtail-Document-Folders/master/screenshots/img-04.png)
