@@ -1,3 +1,5 @@
+from __future__ import absolute_import, unicode_literals
+
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, render
@@ -9,10 +11,9 @@ from django.views.decorators.vary import vary_on_headers
 from wagtail.wagtailadmin.utils import PermissionPolicyChecker
 from wagtail.wagtailsearch.backends import get_search_backends
 
-from ..models import get_document_model, get_folder_model
 from ..forms import get_document_form, get_document_multi_form, get_folder_form
+from ..models import get_document_model, get_folder_model
 from ..permissions import permission_policy
-
 
 permission_checker = PermissionPolicyChecker(permission_policy)
 

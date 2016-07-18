@@ -7,25 +7,31 @@ function(modal) {
 	var currentFolder;
 	var currentFolderTitle;
 
-    function ajaxifyLinks (context) {
+    function ajaxifyLinks (context, search = false) {
         $('a.document-choice', context).click(function() {
             modal.loadUrl(this.href);
             return false;
         });
 
-        // Main Pagination
-        $('#doc-results .pagination a', context).click(function() {
-            var page = this.getAttribute("data-page");
-            setPage(page);
-            return false;
-        });
+        if (!search) {
+            //alert('ajaxify main pagination');
+            // Main Pagination
+            $('#doc-results .pagination a', context).click(function() {
+                var page = this.getAttribute("data-page");
+                setPage(page);
+                return false;
+            });
+        }
 
-		// Search Pagination
-        $('#doc-search-results .pagination a').click(function() {
-            var page = this.getAttribute("data-page");
-            setSearchPage(page);
-            return false;
-        });
+        if (search) {
+            //alert('ajaxify search pagination');
+            // Search Pagination
+            $('#doc-search-results .pagination a').click(function() {
+                var page = this.getAttribute("data-page");
+                setSearchPage(page);
+                return false;
+            });
+        }
 
         $('.listing-folders a', context).click(function() {
             var folder = this.getAttribute("data-folder");
@@ -35,7 +41,7 @@ function(modal) {
         });
 	
         $('a#switch-to-upload-tab', context).click(function() {
-			// Switch to folders tab
+			// Switch to upload tab
 			$('.modal a[href="#upload"]').tab('show');
 			return false;
 		});
@@ -56,7 +62,8 @@ function(modal) {
         });
     }
 
-    function search() {
+    function search_docs() {
+        console.log("Search function");
         $.ajax({
             url: searchUrl,
             data: {
@@ -65,9 +72,12 @@ function(modal) {
             },
             success: function(data, status) {
                 $('#doc-search-results').html(data);
-                ajaxifyLinks($('#doc-search-results'));
-				$('.modal a[href="#folders"]').tab('show'); // Switch to folders tab
-            }
+                ajaxifyLinks($('#doc-search-results'), search = true);
+				//$('.modal a[href="#folders"]').tab('show'); // Switch to folders tab
+            },
+			error: function(){
+				alert('Something went wrong');
+			}
         });
         return false;
     };
@@ -116,7 +126,7 @@ function(modal) {
             data: dataObj,
             success: function(data, status) {
                 $('#doc-search-results').html(data);
-                ajaxifyLinks($('#doc-search-results'));
+                ajaxifyLinks($('#doc-search-results'), search = true);
             }
         });
         return false;
@@ -174,15 +184,15 @@ function(modal) {
         return false;
     });
 
-    $('form.document-search', modal.body).submit(search);
+    $('form.document-search', modal.body).submit(search_docs);
 
     $('#id_q').on('input', function() {
         clearTimeout($.data(this, 'timer'));
-        var wait = setTimeout(search, 50);
+        var wait = setTimeout(search_docs, 200);
         $(this).data('timer', wait);
     });
 
-    $('#collection_chooser_collection_id').change(search);
+    $('#collection_chooser_collection_id').change(search_docs);
 
     {% url 'wagtailadmin_tag_autocomplete' as autocomplete_url %}
     $('#id_tags', modal.body).tagit({

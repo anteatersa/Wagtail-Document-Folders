@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wagtail\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-11 13:57+0100\n"
-"PO-Revision-Date: 2016-04-11 13:00+0000\n"
-"Last-Translator: Karl Hobley <karl@torchbox.com>\n"
+"POT-Creation-Date: 2016-05-18 21:37+0000\n"
+"PO-Revision-Date: 2016-05-12 12:22+0000\n"
+"Last-Translator: Aarni Koskela\n"
 "Language-Team: Finnish (http://www.transifex.com/torchbox/wagtail/language/"
 "fi/)\n"
 "MIME-Version: 1.0\n"
@@ -61,6 +61,12 @@ msgstr "Lähetä"
 
 msgid "Uploading..."
 msgstr "Lähetetään..."
+
+msgid "Server Error"
+msgstr "Palvelinvirhe"
+
+msgid "Report this error to your webmaster with the following information:"
+msgstr "Raportoi tämä virhe sivuston ylläpitäjälle seuraavan tiedon kanssa:"
 
 #, python-format
 msgid ""

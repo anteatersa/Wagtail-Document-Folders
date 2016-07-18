@@ -1,19 +1,19 @@
-from __future__ import unicode_literals
+from __future__ import absolute_import, unicode_literals
 
 import os.path
 
-from taggit.managers import TaggableManager
-
+from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import pre_delete
-from django.dispatch.dispatcher import receiver
 from django.dispatch import Signal
-from django.core.urlresolvers import reverse
-from django.core.exceptions import ImproperlyConfigured
-from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
+from django.dispatch.dispatcher import receiver
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.translation import ugettext_lazy as _
+from taggit.managers import TaggableManager
 
+from wagtail.utils.deprecation import SearchFieldsShouldBeAList
 from wagtail.wagtailadmin.taggable import TagSearchable
 from wagtail.wagtailadmin.utils import get_object_usage
 from wagtail.wagtailcore.models import CollectionMember
@@ -45,6 +45,7 @@ class DocumentFolder(models.Model):
 def get_folder_model():
     return DocumentFolder
 
+
 @python_2_unicode_compatible
 class AbstractDocument(CollectionMember, TagSearchable):
     folder = models.ForeignKey(DocumentFolder, null = True, blank = True) # Null value would be root document folder
@@ -64,9 +65,9 @@ class AbstractDocument(CollectionMember, TagSearchable):
 
     objects = DocumentQuerySet.as_manager()
 
-    search_fields = TagSearchable.search_fields + CollectionMember.search_fields + (
+    search_fields = SearchFieldsShouldBeAList(TagSearchable.search_fields + CollectionMember.search_fields + [
         index.FilterField('uploaded_by_user'),
-    )
+    ], name='search_fields on Document subclasses')
 
     def __str__(self):
         return self.title
