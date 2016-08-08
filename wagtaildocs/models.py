@@ -39,6 +39,15 @@ class DocumentFolder(models.Model):
         else:
             return False
 
+    def get_breadcrumbs(self):
+        folder_breadcrumb = []
+        folder_breadcrumb_current_folder = self
+        while folder_breadcrumb_current_folder:
+            folder_breadcrumb.append(folder_breadcrumb_current_folder)
+            folder_breadcrumb_current_folder = folder_breadcrumb_current_folder.get_parent()
+        folder_breadcrumb.reverse()
+        return folder_breadcrumb
+
     def get_subfolders(self):
         return DocumentFolder.objects.filter(folder = self)
 

@@ -33,6 +33,13 @@ function(modal) {
             });
         }
 
+        $('ul.breadcrumb li a', context).click(function() {
+            var folder = this.getAttribute("data-folder");
+            var folderTitle = this.getAttribute("data-folder-title");
+            setFolder(folder, folderTitle);
+            return false;
+        });
+
         $('.listing-folders a', context).click(function() {
             var folder = this.getAttribute("data-folder");
             var folderTitle = this.getAttribute("data-folder-title");
