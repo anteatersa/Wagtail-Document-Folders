@@ -46,6 +46,7 @@ def get_document_multi_form(model):
             'file': forms.FileInput()
         })
 
+
 class DocumentFolderForm(forms.ModelForm):
     title = forms.CharField(required=True)
 

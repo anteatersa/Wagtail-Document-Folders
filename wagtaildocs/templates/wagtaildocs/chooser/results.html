@@ -9,17 +9,12 @@
         {% endblocktrans %}
         </h2>
     {% else %}
-       {# <h2>{% trans "Latest documents" %}</h2> #}
+        <h2>{% trans "Latest documents" %}</h2>
     {% endif %}
 
     {% include "wagtaildocs/documents/list.html" with choosing=1 %}
 
     {% include "wagtailadmin/shared/pagination_nav.html" with items=documents is_ajax=1 %}
 {% else %}
-    {% if is_searching %}
-        <p>{% blocktrans %}Sorry, no documents match "<em>{{ query_string }}</em>"{% endblocktrans %}</p>
-	{% else %}
-	    <h2>No documents found</h2>
-	    <a href="#" id="switch-to-upload-tab" class="button button-small">Upload</a>
-	{% endif %}
+    <p>{% blocktrans %}Sorry, no documents match "<em>{{ query_string }}</em>"{% endblocktrans %}</p>
 {% endif %}

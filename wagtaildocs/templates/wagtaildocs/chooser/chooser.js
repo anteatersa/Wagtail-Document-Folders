@@ -1,11 +1,12 @@
 {% load i18n %}
 function(modal) {
+
     var searchUrl = $('form.document-search', modal.body).attr('action');
 
-	/* currentFolder store the current folder we are browsing in, we then use
-	this in the upload form to make sure the image goes into the right folder */
-	var currentFolder;
-	var currentFolderTitle;
+    /* currentFolder store the current folder we are browsing in, we then use
+    this in the upload form to make sure the image goes into the right folder */
+    var currentFolder;
+    var currentFolderTitle;
 
     function ajaxifyLinks (context, search = false) {
         $('a.document-choice', context).click(function() {
@@ -46,12 +47,12 @@ function(modal) {
             setFolder(folder, folderTitle);
             return false;
         });
-	
+    
         $('a#switch-to-upload-tab', context).click(function() {
-			// Switch to upload tab
-			$('.modal a[href="#upload"]').tab('show');
-			return false;
-		});
+            // Switch to upload tab
+            $('.modal a[href="#upload"]').tab('show');
+            return false;
+        });
     };
 
     function fetchResults(requestData) {
@@ -61,11 +62,11 @@ function(modal) {
             success: function(data, status) {
                 $('#doc-results').html(data);
                 ajaxifyLinks($('#doc-results'));
-				$('.modal a[href="#folders"]').tab('show'); // Switch to folders tab
+                $('.modal a[href="#folders"]').tab('show'); // Switch to folders tab
             },
-			error: function(){
-				alert('Something went wrong');
-			}
+            error: function(){
+                alert('Something went wrong');
+            }
         });
     }
 
@@ -80,11 +81,11 @@ function(modal) {
             success: function(data, status) {
                 $('#doc-search-results').html(data);
                 ajaxifyLinks($('#doc-search-results'), search = true);
-				//$('.modal a[href="#folders"]').tab('show'); // Switch to folders tab
+                //$('.modal a[href="#folders"]').tab('show'); // Switch to folders tab
             },
-			error: function(){
-				alert('Something went wrong');
-			}
+            error: function(){
+                alert('Something went wrong');
+            }
         });
         return false;
     };
@@ -97,9 +98,9 @@ function(modal) {
                 $('#folder-results-wrapper').html(data);
                 ajaxifyLinks($('#folder-results-wrapper'));
             },
-			error: function(){
-				alert('Something went wrong');
-			}
+            error: function(){
+                alert('Something went wrong');
+            }
         });
     }
 
@@ -139,25 +140,25 @@ function(modal) {
         return false;
     }
 
-	function updateLabels(){
-		// Folder title label
-		if (currentFolderTitle){
-			$('.label-folder-title').html(currentFolderTitle);
-		} else {
-			$('.label-folder-title').html('Root');	
-		}
-	}
+    function updateLabels(){
+        // Folder title label
+        if (currentFolderTitle){
+            $('.label-folder-title').html(currentFolderTitle);
+        } else {
+            $('.label-folder-title').html('Root');  
+        }
+    }
 
     function setFolder(folder, folderTitle) {
-		currentFolder = folder;
-		currentFolderTitle = folderTitle;
-		updateLabels();
-		// Set currentFolder in form
-		$('form.document-upload input#id_folder').val(folder)
+        currentFolder = folder;
+        currentFolderTitle = folderTitle;
+        updateLabels();
+        // Set currentFolder in form
+        $('form.document-upload input#id_folder').val(folder)
         params = {folder: folder};
-		//TODO - reset currentTag or query?
+        //TODO - reset currentTag or query?
         fetchResults(params);
-		// Second query to get folders
+        // Second query to get folders
         params = {folder: folder, folders_only: '1'};
         fetchFolders(params);
         return false;
@@ -205,4 +206,5 @@ function(modal) {
     $('#id_tags', modal.body).tagit({
         autocomplete: {source: "{{ autocomplete_url|addslashes }}"}
     });
+
 }
