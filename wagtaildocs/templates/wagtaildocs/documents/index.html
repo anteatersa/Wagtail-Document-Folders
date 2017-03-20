@@ -71,7 +71,7 @@
             <ul class="breadcrumb">
                 <li class="home"><a href="{% url 'wagtaildocs:index' %}" class="icon icon-home text-replace">Home</a></li>
                 {% for fb in current_folder.get_breadcrumbs %}
-                <li><a href="{% url 'wagtailimages:index' %}?folder={{ fb.id }}">{{ fb.title }}</a></li>
+                <li><a href="{% url 'wagtaildocs:index' %}?folder={{ fb.id }}">{{ fb.title }}</a></li>
                 {% endfor %}
             </ul>
             </div>
