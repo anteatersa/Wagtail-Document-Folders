@@ -34,19 +34,19 @@
             <div class="addbutton">
                         <a href="{% url 'wagtaildocs:add_multiple' %}?folder={{ current_folder.id }}" class="button button-small bicolor icon icon-plus">Add document</a>
                         {% if current_folder %}
-                            <a href="/admin/documents/folder/add/{{ current_folder.id }}/" class="button button-small bicolor icon icon-plus">Add folder</a>
-                            <a href="/admin/documents/folder/{{ current_folder.id }}/" class="button button-small bicolor icon icon-edit">Edit folder</a>
+                            <a href="{% url 'wagtaildocs:add_folder_to_folder' current_folder.id %}" class="button button-small bicolor icon icon-plus">Add folder</a>
+                            <a href="{% url 'wagtaildocs:edit_folder' current_folder.id%}" class="button button-small bicolor icon icon-edit">Edit folder</a>
                             {#<a href="/admin/documents/folder/{{ current_folder.id }}/" class="button icon text-replace white icon-edit">Edit Folder</a>#}
                             {#<a href="{% url 'wagtaildocs:delete_folder' current_folder.id %}"><span class="button icon text-replace no icon-bin">Delete Folder</span></a>#}
                             <a href="{% url 'wagtaildocs:delete_folder' current_folder.id %}" class="button button-small bicolor icon no icon-bin">Delete folder</a>
                         {% else %}
-                            <a href="/admin/documents/folder/add/" class="button button-small bicolor icon icon-plus">Add folder</a>
+                            <a href="{% url 'wagtaildocs:add_folder' %}" class="button button-small bicolor icon icon-plus">Add folder</a>
                         {% endif %}
             </div>
         </div>
         {% comment %}
         {% if collections %}
-            <form class="image-search search-bar" action="{% url 'wagtaildocs:index' %}" method="GET">
+            <form class="image-search search-bar" action="{% url 'wagtaildocs:index' %}" method="GET" novalidate>
                 <ul class="fields">
                     {% include "wagtailadmin/shared/collection_chooser.html" %}
                 </ul>
@@ -71,7 +71,7 @@
             <ul class="breadcrumb">
                 <li class="home"><a href="{% url 'wagtaildocs:index' %}" class="icon icon-home text-replace">Home</a></li>
                 {% for fb in current_folder.get_breadcrumbs %}
-                <li><a href="{% url 'wagtailimages:index' %}?folder={{ fb.id }}">{{ fb.title }}</a></li>
+                <li><a href="{% url 'wagtaildocs:index' %}?folder={{ fb.id }}">{{ fb.title }}</a></li>
                 {% endfor %}
             </ul>
             </div>

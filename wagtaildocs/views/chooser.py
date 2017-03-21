@@ -95,16 +95,16 @@ def chooser(request):
         if not folders_only:
             return render(request, "wagtaildocs/chooser/results.html", {
                 'documents': documents,
-                'folders' : folders,
-                'current_folder' : current_folder,
+                'folders': folders,
+                'current_folder': current_folder,
                 'query_string': q,
                 'is_searching': is_searching,
             })
         else:
             return render(request, "wagtaildocs/chooser/folders.html", {
                 'documents': documents,
-                'folders' : folders,
-                'current_folder' : current_folder,
+                'folders': folders,
+                'current_folder': current_folder,
                 'query_string': q,
                 'is_searching': is_searching,
             })
@@ -120,8 +120,8 @@ def chooser(request):
 
     return render_modal_workflow(request, 'wagtaildocs/chooser/chooser.html', 'wagtaildocs/chooser/chooser.js', {
         'documents': documents,
-        'folders' : folders,
-        'current_folder' : current_folder,
+        'folders': folders,
+        'current_folder': current_folder,
         'uploadform': uploadform,
         'searchform': searchform,
         'collections': collections,

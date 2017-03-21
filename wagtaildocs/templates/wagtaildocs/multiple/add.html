@@ -22,6 +22,7 @@
             {% else %}
                 <form action="{% url 'wagtaildocs:add_multiple' %}" method="POST" enctype="multipart/form-data">
             {% endif %}
+
                 <div class="replace-file-input">
                     <button class="bicolor icon icon-plus">{% trans "Or choose from your computer" %}</button>
                     {% if current_folder %}

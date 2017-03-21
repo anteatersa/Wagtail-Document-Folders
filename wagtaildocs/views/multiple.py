@@ -11,7 +11,7 @@ from django.views.decorators.vary import vary_on_headers
 from wagtail.wagtailadmin.utils import PermissionPolicyChecker
 from wagtail.wagtailsearch.backends import get_search_backends
 
-from ..forms import get_document_form, get_document_multi_form, get_folder_form
+from ..forms import get_document_form, get_document_multi_form
 from ..models import get_document_model, get_folder_model
 from ..permissions import permission_policy
 
@@ -30,7 +30,7 @@ def add(request):
     current_folder = None
     folder_id = request.GET.get('folder')
     if folder_id:
-        print "folder id in url"
+        print("folder id in url")
         try:
             current_folder = DocumentFolder.objects.get(id=folder_id)
         except (ValueError, DocumentFolder.DoesNotExist):
@@ -91,7 +91,7 @@ def add(request):
         form = DocumentForm(user=request.user)
 
     return render(request, 'wagtaildocs/multiple/add.html', {
-        'current_folder' : current_folder,
+        'current_folder': current_folder,
         'help_text': form.fields['file'].help_text,
         'collections': collections_to_choose,
     })

@@ -8,7 +8,8 @@ from django.views.decorators.vary import vary_on_headers
 from wagtail.utils.pagination import paginate
 from wagtail.wagtailadmin import messages
 from wagtail.wagtailadmin.forms import SearchForm
-from wagtail.wagtailadmin.utils import PermissionPolicyChecker, permission_denied
+from wagtail.wagtailadmin.utils import (
+    PermissionPolicyChecker, permission_denied, popular_tags_for_model)
 from wagtail.wagtailcore.models import Collection
 from wagtail.wagtaildocs.forms import get_document_form
 from wagtail.wagtaildocs.models import get_document_model, get_folder_model
@@ -24,7 +25,7 @@ def index(request):
 
     # Folders
     DocumentFolder = get_folder_model()
-    folders = DocumentFolder.objects.filter(folder__isnull = True)
+    folders = DocumentFolder.objects.filter(folder__isnull=True)
 
     Document = get_document_model()
 
@@ -69,7 +70,9 @@ def index(request):
             documents = documents.filter(folder=current_folder)
         except (ValueError, DocumentFolder.DoesNotExist):
             pass
-    if not current_folder: documents = documents.filter(folder__isnull = True)
+
+    if not current_folder:
+        documents = documents.filter(folder__isnull=True)
 
     # Pagination
     paginator, documents = paginate(request, documents)
@@ -86,7 +89,7 @@ def index(request):
             'ordering': ordering,
             'documents': documents,
             'folders': folders,
-            'current_folder' : current_folder,
+            'current_folder': current_folder,
             'query_string': query_string,
             'is_searching': bool(query_string),
         })
@@ -95,12 +98,12 @@ def index(request):
             'ordering': ordering,
             'documents': documents,
             'folders': folders,
-            'current_folder' : current_folder,
+            'current_folder': current_folder,
             'query_string': query_string,
             'is_searching': bool(query_string),
 
             'search_form': form,
-            'popular_tags': Document.popular_tags(),
+            'popular_tags': popular_tags_for_model(Document),
             'user_can_add': permission_policy.user_has_permission(request.user, 'add'),
             'collections': collections,
             'current_collection': current_collection,
@@ -204,17 +207,18 @@ def delete(request, document_id):
         return permission_denied(request)
 
     if doc.folder:
-	parent_folder = doc.folder
+        parent_folder = doc.folder
     else:
-	parent_folder = False
+        parent_folder = False
 
     if request.method == 'POST':
         doc.delete()
         messages.success(request, _("Document '{0}' deleted.").format(doc.title))
         response = redirect('wagtaildocs:index')
-	if parent_folder:
-	    response['Location'] += '?folder={0}'.format(parent_folder.id)
-	return response
+
+    if parent_folder:
+        response['Location'] += '?folder={0}'.format(parent_folder.id)
+    return response
 
     return render(request, "wagtaildocs/documents/confirm_delete.html", {
         'document': doc,
